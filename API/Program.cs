@@ -1,3 +1,5 @@
+using Application.Activities.Queries;
+using Application.Core;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -9,9 +11,11 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-
 builder.Services.AddCors();
+builder.Services.AddMediatR(configuration => 
+    configuration.RegisterServicesFromAssemblyContaining<GetActivityList>());
 
+builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 var app = builder.Build();
 
 app.UseCors(policy =>
