@@ -37,7 +37,20 @@ public class DbInitializer
                 Venue =
                     "The Lamb and Flag, 33, Rose Street, Seven Dials, Covent Garden, London, Greater London, England, WC2E 9EB, United Kingdom",
                 Latitude = 51.51171665,
-                Longitude = -0.1256611057818921
+                Longitude = -0.1256611057818921,
+                Attendees =
+                [
+                    new()
+                    {
+                        UserId = users[0].Id,
+                        IsHost = true,
+                    },
+                    new()
+                    {
+                        UserId = users[1].Id,
+                        IsHost = false,
+                    }
+                ]
             },
             new()
             {
@@ -49,7 +62,23 @@ public class DbInitializer
                 Venue =
                     "Louvre Museum, Rue Saint-Honoré, Quartier du Palais Royal, 1st Arrondissement, Paris, Ile-de-France, Metropolitan France, 75001, France",
                 Latitude = 48.8611473,
-                Longitude = 2.33802768704666
+                Longitude = 2.33802768704666,
+                Attendees =
+                [
+                    new()
+                    {
+                        UserId = users[1].Id,
+                        IsHost = true,
+                    },
+                    new()
+                    {
+                        UserId = users[2].Id
+                    },
+                    new()
+                    {
+                        UserId = users[0].Id,
+                    }
+                ]
             },
             new()
             {
@@ -60,7 +89,15 @@ public class DbInitializer
                 City = "London",
                 Venue = "Natural History Museum",
                 Latitude = 51.496510900000004,
-                Longitude = -0.17600190725447445
+                Longitude = -0.17600190725447445,
+                Attendees =
+                [
+                    new()
+                    {
+                        UserId = users[2].Id,
+                        IsHost = true,
+                    }
+                ]
             },
             new()
             {
@@ -71,7 +108,19 @@ public class DbInitializer
                 City = "London",
                 Venue = "The O2",
                 Latitude = 51.502936649999995,
-                Longitude = 0.0032029278126681844
+                Longitude = 0.0032029278126681844,
+                Attendees =
+                [
+                    new()
+                    {
+                        UserId = users[0].Id,
+                        IsHost = true,
+                    },
+                    new()
+                    {
+                        UserId = users[2].Id
+                    }
+                ]
             },
             new()
             {
@@ -82,7 +131,15 @@ public class DbInitializer
                 City = "London",
                 Venue = "The Mayflower",
                 Latitude = 51.501778,
-                Longitude = -0.053577
+                Longitude = -0.053577,
+                Attendees =
+                [
+                    new()
+                    {
+                        UserId = users[1].Id,
+                        IsHost = true,
+                    }
+                ]
             },
             new()
             {
@@ -93,7 +150,19 @@ public class DbInitializer
                 City = "London",
                 Venue = "The Blackfriar",
                 Latitude = 51.512146650000005,
-                Longitude = -0.10364680647106028
+                Longitude = -0.10364680647106028,
+                Attendees =
+                [
+                    new()
+                    {
+                        UserId = users[2].Id,
+                        IsHost = true,
+                    },
+                    new()
+                    {
+                        UserId = users[0].Id
+                    }
+                ]
             },
             new()
             {
@@ -105,7 +174,15 @@ public class DbInitializer
                 Venue =
                     "Sherlock Holmes Museum, 221b, Baker Street, Marylebone, London, Greater London, England, NW1 6XE, United Kingdom",
                 Latitude = 51.5237629,
-                Longitude = -0.1584743
+                Longitude = -0.1584743,
+                Attendees =
+                [
+                    new()
+                    {
+                        UserId = users[0].Id,
+                        IsHost = true,
+                    }
+                ]
             },
             new()
             {
@@ -117,7 +194,19 @@ public class DbInitializer
                 Venue =
                     "Roundhouse, Chalk Farm Road, Maitland Park, Chalk Farm, London Borough of Camden, London, Greater London, England, NW1 8EH, United Kingdom",
                 Latitude = 51.5432505,
-                Longitude = -0.15197608174931165
+                Longitude = -0.15197608174931165,
+                Attendees =
+                [
+                    new()
+                    {
+                        UserId = users[1].Id,
+                        IsHost = true,
+                    },
+                    new()
+                    {
+                        UserId = users[0].Id
+                    }
+                ]
             },
             new()
             {
@@ -128,7 +217,19 @@ public class DbInitializer
                 City = "London",
                 Venue = "River Thames, England, United Kingdom",
                 Latitude = 51.5575525,
-                Longitude = -0.781404
+                Longitude = -0.781404,
+                Attendees =
+                [
+                    new()
+                    {
+                        UserId = users[2].Id,
+                        IsHost = true,
+                    },
+                    new()
+                    {
+                        UserId = users[1].Id
+                    }
+                ]
             },
             new()
             {
@@ -139,7 +240,15 @@ public class DbInitializer
                 City = "London",
                 Venue = "Odeon Leicester Square",
                 Latitude = 51.5575525,
-                Longitude = -0.781404
+                Longitude = -0.781404,
+                Attendees =
+                [
+                    new()
+                    {
+                        UserId = users[0].Id,
+                        IsHost = true,
+                    }
+                ]
             }
         };
 
