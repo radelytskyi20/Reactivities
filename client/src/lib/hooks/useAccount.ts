@@ -5,6 +5,8 @@ import { useLocation, useNavigate } from "react-router";
 import { RegisterSchema } from "../schemas/registerSchema";
 import { toast } from "react-toastify";
 
+type AuthStatus = "checking" | "authenticated" | "unauthenticated";
+
 export const useAccount = () => {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
@@ -42,7 +44,7 @@ export const useAccount = () => {
         }
     })
 
-    const { data: currentUser, isLoading: loadingUserInfo } = useQuery({
+    const { data: currentUser, isLoading, isFetching } = useQuery({
         queryKey: ['user'],
         queryFn: async () => {
             const response = await agent.get<User>('/account/user-info');
@@ -53,11 +55,21 @@ export const useAccount = () => {
             && location.pathname !== '/register'
     })
 
+    let loginStatus: AuthStatus = "checking";
+
+    if (queryClient.getQueryData<User>(["user"])) {
+        loginStatus = "authenticated";
+    } else if (isLoading || isFetching) {
+        loginStatus = "checking";
+    } else {
+        loginStatus = "unauthenticated";
+    }
+
     return {
         loginUser,
         currentUser,
         logoutUser,
-        loadingUserInfo,
-        registerUser
+        registerUser,
+        loginStatus
     }
 }
