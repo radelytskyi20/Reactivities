@@ -8,9 +8,10 @@ import Counter from "../../features/counter/Counter";
 import TestErrors from "../../features/errors/TestErrors";
 import NotFound from "../../features/errors/NotFound";
 import ServerError from "../../features/errors/ServerError";
-import LoginForm from "../../features/account/LoginForm";
 import RequireAuth from "./RequireAuth";
+import LoginForm from "../../features/account/LoginForm";
 import RegisterForm from "../../features/account/RegisterForm";
+import ProfilePage from "../../features/profiles/ProfilePage";
 
 export const router = createBrowserRouter([
     {
@@ -22,7 +23,8 @@ export const router = createBrowserRouter([
                     { path: 'activities', element: <ActivityDashbord /> },
                     { path: 'activities/:id', element: <ActivityDetailPage /> },
                     { path: 'createActivity', element: <ActivityForm key='create' /> },
-                    { path: '/manage/:id', element: <ActivityForm /> }
+                    { path: '/manage/:id', element: <ActivityForm /> },
+                    { path: 'profiles/:id', element: <ProfilePage /> }
                 ]
             },
             { path: '', element: <HomePage /> },
