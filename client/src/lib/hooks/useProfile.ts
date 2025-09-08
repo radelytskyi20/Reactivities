@@ -1,10 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import agent from "../api/agent"
 import { useMemo } from "react";
+import { EditProfileSchema } from "../schemas/editProfileSchema";
 
 export const useProfile = (id?: string) => {
     const queryClient = useQueryClient();
-    
+
     const { data: profile, isLoading: loadingProfile } = useQuery<Profile>({
         queryKey: ['profile', id],
         queryFn: async () => {
@@ -14,7 +15,7 @@ export const useProfile = (id?: string) => {
         enabled: !!id
     });
 
-    const {data: photos, isLoading: loadingPhotos} = useQuery<Photo[]>({
+    const { data: photos, isLoading: loadingPhotos } = useQuery<Photo[]>({
         queryKey: ['photos', id],
         queryFn: async () => {
             const response = await agent.get<Photo[]>(`/profiles/${id}/photos`);
@@ -89,7 +90,30 @@ export const useProfile = (id?: string) => {
                 return photos?.filter(x => x.id !== photoId);
             })
         }
-    })
+    });
+
+    const updateProfile = useMutation({
+        mutationFn: async (profile: EditProfileSchema) => {
+            await agent.put(`/profiles/update-profile`, profile);
+        },
+        onSuccess: (_, profile) => {
+            queryClient.setQueryData(['profile', id], (data: Profile) => {
+                if (!data) return data;
+                return {
+                    ...data,
+                    displayName: profile.displayName,
+                    bio: profile.bio
+                }
+            });
+            queryClient.setQueryData(['user'], (userData: User) => {
+                if (!userData) return userData;
+                return {
+                    ...userData,
+                    displayName: profile.displayName
+                }
+            });
+        }
+    });
 
     return {
         profile,
@@ -99,6 +123,7 @@ export const useProfile = (id?: string) => {
         isCurrentUser,
         uploadPhoto,
         setMainPhoto,
-        deletePhoto
+        deletePhoto,
+        updateProfile
     }
 }
