@@ -1,4 +1,5 @@
 ﻿using Application.Core;
+using Application.Interfaces;
 using Application.Profiles.Dtos;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -17,12 +18,14 @@ public class GetProfile
 
     public class Handler(
         AppDbContext appDbContext,
-        IMapper mapper) : IRequestHandler<Query, Result<UserProfile>>
+        IMapper mapper,
+        IUserAccessor userAccessor) : IRequestHandler<Query, Result<UserProfile>>
     {
         public async Task<Result<UserProfile>> Handle(Query request, CancellationToken cancellationToken)
         {
             var profile = await appDbContext.Users
-                .ProjectTo<UserProfile>(mapper.ConfigurationProvider)
+                .ProjectTo<UserProfile>(mapper.ConfigurationProvider,
+                    new { currentUserId = userAccessor.GetUserId() })
                 .SingleOrDefaultAsync(x => x.Id == request.UserId, cancellationToken);
 
             return profile is null
