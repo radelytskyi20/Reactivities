@@ -6,7 +6,7 @@ import ProfileEditForm from "./ProfileEditForm";
 
 export default function ProfileAbout() {
     const { id } = useParams();
-    const { profile, isCurrentUser, updateProfile } = useProfile(id);
+    const { profile, isCurrentUser, updateProfile } = useProfile({ id });
     const [editMode, setEditMode] = useState(false);
 
     return (

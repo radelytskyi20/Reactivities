@@ -6,7 +6,7 @@ import { useProfile } from "../../lib/hooks/useProfile";
 
 export default function ProfilePage() {
     const { id } = useParams();
-    const { profile, loadingProfile } = useProfile(id);
+    const { profile, loadingProfile } = useProfile({ id });
 
     if (loadingProfile) return <Typography>Loading profile...</Typography>
 

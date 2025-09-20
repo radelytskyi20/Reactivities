@@ -3,7 +3,14 @@ import agent from "../api/agent"
 import { useMemo } from "react";
 import { EditProfileSchema } from "../schemas/editProfileSchema";
 
-export const useProfile = (id?: string, predicate?: string) => {
+export const useProfile = ({
+    id,
+    followPredicate,
+    activityPredicate }: {
+        id?: string,
+        followPredicate?: string,
+        activityPredicate?: string
+    }) => {
     const queryClient = useQueryClient();
 
     const { data: profile, isLoading: loadingProfile } = useQuery<Profile>({
@@ -12,7 +19,7 @@ export const useProfile = (id?: string, predicate?: string) => {
             const response = await agent.get<Profile>(`/profiles/${id}`);
             return response.data;
         },
-        enabled: !!id && !predicate
+        enabled: !!id && !followPredicate
     });
 
     const { data: photos, isLoading: loadingPhotos } = useQuery<Photo[]>({
@@ -21,17 +28,28 @@ export const useProfile = (id?: string, predicate?: string) => {
             const response = await agent.get<Photo[]>(`/profiles/${id}/photos`);
             return response.data
         },
-        enabled: !!id && !predicate
+        enabled: !!id && !followPredicate
     })
 
     const { data: followings, isLoading: loadingFollowings } = useQuery<Profile[]>({
-        queryKey: ['followings', id, predicate],
+        queryKey: ['followings', id, followPredicate],
         queryFn: async () => {
-            const response = 
-                await agent.get<Profile[]>(`/profiles/${id}/follow-list?predicate=${predicate}`);
+            const response =
+                await agent.get<Profile[]>(`/profiles/${id}/follow-list?predicate=${followPredicate}`);
             return response.data;
         },
-        enabled: !!id && !!predicate
+        enabled: !!id && !!followPredicate
+    })
+
+    const { data: profileActivities, isLoading: loadingProfileActivities } = useQuery<ProfileActivity[]>({
+        queryKey: ['profileActivities', id, activityPredicate],
+        queryFn: async () => {
+            const response =
+                await agent.get<ProfileActivity[]>(`/profiles/${id}/activities-list?predicate=${activityPredicate}`);
+
+            return response.data;
+        },
+        enabled: !!id && !!activityPredicate
     })
 
     const isCurrentUser = useMemo(() => {
@@ -131,16 +149,16 @@ export const useProfile = (id?: string, predicate?: string) => {
         },
         onSuccess: () => {
             queryClient.setQueryData(['profile', id], (profile: Profile) => {
-                queryClient.invalidateQueries({ queryKey: ['followings', id, 'followers']})
+                queryClient.invalidateQueries({ queryKey: ['followings', id, 'followers'] })
                 if (!profile || profile.followersCount === undefined)
                     return profile;
 
                 return {
                     ...profile,
                     following: !profile.following,
-                    followersCount: profile.following 
-                        ? profile.followersCount - 1 
-                        : profile.followersCount + 1 
+                    followersCount: profile.following
+                        ? profile.followersCount - 1
+                        : profile.followersCount + 1
                 }
             })
         }
@@ -158,6 +176,8 @@ export const useProfile = (id?: string, predicate?: string) => {
         updateProfile,
         updateFollowing,
         followings,
-        loadingFollowings
+        loadingFollowings,
+        profileActivities,
+        loadingProfileActivities
     }
 }

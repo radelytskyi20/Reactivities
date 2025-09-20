@@ -15,7 +15,7 @@ export default function ProfilePhotos() {
         uploadPhoto,
         profile,
         setMainPhoto,
-        deletePhoto } = useProfile(id);
+        deletePhoto } = useProfile({ id });
     const [editMode, setEditMode] = useState(false);
 
     const handlePhotoUpload = (file: Blob) => {

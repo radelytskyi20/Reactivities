@@ -28,7 +28,7 @@ export default function ActivityDetailsInfo({ activity }: Props) {
                     <CalendarToday color="info" fontSize="large" />
                 </Grid2>
                 <Grid2 size={11}>
-                    <Typography>{formatDate(activity.date)}</Typography>
+                    <Typography>{formatDate(activity.date, 'dd MMM yyyy h:mm a')}</Typography>
                 </Grid2>
             </Grid2>
             <Divider />

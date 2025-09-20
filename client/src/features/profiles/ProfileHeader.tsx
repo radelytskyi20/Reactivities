@@ -4,7 +4,7 @@ import { useProfile } from "../../lib/hooks/useProfile";
 
 export default function ProfileHeader() {
     const { id } = useParams();
-    const { isCurrentUser, profile, updateFollowing } = useProfile(id);
+    const { isCurrentUser, profile, updateFollowing } = useProfile({ id });
 
     if (!profile)
         return null;

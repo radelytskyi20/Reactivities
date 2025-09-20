@@ -34,9 +34,16 @@ public class MappingProfiles : Profile
             .ForMember(d => d.FollowingCount, o => o.MapFrom(s => s.Followings.Count))
             .ForMember(d => d.Following, o => o.MapFrom(s => 
                 s.Followers.Any(x => x.Observer.Id == currentUserId)));
+        
         CreateMap<Comment, CommentDto>()
             .ForMember(d => d.UserId, o => o.MapFrom(s => s.User.Id))
             .ForMember(d => d.DisplayName, o => o.MapFrom(s => s.User.DisplayName))
             .ForMember(d => d.ImageUrl, o => o.MapFrom(s => s.User.ImageUrl));
+
+        CreateMap<Activity, UserActivity>()
+            .ForMember(d => d.Id, o => o.MapFrom(s => s.Id))
+            .ForMember(d => d.Title, o => o.MapFrom(s => s.Title))
+            .ForMember(d => d.Category, o => o.MapFrom(s => s.Category))
+            .ForMember(d => d.Date, o => o.MapFrom(s => s.Date));
     }
 }

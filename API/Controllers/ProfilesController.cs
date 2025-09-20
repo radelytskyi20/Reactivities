@@ -55,4 +55,10 @@ public class ProfilesController : BaseApiController
     {
         return HandleResult(await Mediator.Send(new GetFollowings.Query { UserId = userId, Predicate = predicate }));
     }
+
+    [HttpGet("{userId}/activities-list")]
+    public async Task<ActionResult> GetActivities(string userId, string predicate)
+    {
+        return HandleResult(await Mediator.Send(new GetActivities.Query { UserId = userId, Predicate = predicate }));
+    }
 }

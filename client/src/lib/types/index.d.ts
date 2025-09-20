@@ -1,3 +1,15 @@
+type PagedList<T, TCursor> = {
+  items: T[]
+  nextCursor: TCursor
+}
+
+type ProfileActivity = {
+  id: string
+  title: string
+  category: string
+  date: Date
+}
+
 type Activity = {
     id: string
     title: string
